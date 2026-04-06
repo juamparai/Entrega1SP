@@ -36,7 +36,7 @@ int main(int argc,char*argv[]){
 	b=(double*)malloc(sizeof(double)*n*n);
     d=(double*)malloc(sizeof(double)*n*n);
     m=(double*)malloc(sizeof(double)*n*n);
-    
+
 	// Inicializa la matriz a de forma tal que la celda (i,j) tiene valor i
 	for(i=0;i<n;i++)
 		for(j=0;j<n;j++)
@@ -134,4 +134,14 @@ void setValor(double *matriz,int fila,int columna, int n, int orden,double valor
 		matriz[fila*n+columna]=valor;
 	else
 		matriz[fila+columna*n]=valor;
+}
+
+//Para calcular tiempo
+double dwalltime(){
+        double sec;
+        struct timeval tv;
+
+        gettimeofday(&tv,NULL);
+        sec = tv.tv_sec + tv.tv_usec/1000000.0;
+        return sec;
 }
