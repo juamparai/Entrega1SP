@@ -120,7 +120,7 @@ int main(int argc,char*argv[]){
 	return(0);
 }
 
-void calcularEstadisticas(double *a, int n, double *max, double *min, double *prom, int flag) {
+void calcularEstadisticas(double *a, int n, double *max, double *min, double *prom) {
     int i;
     int tamano = n * n;
 
