@@ -1,0 +1,4 @@
+Tiempo en segundos 0.318766
+Tiempo en segundos 3.683394
+Tiempo en segundos 32.283420
+Tiempo en segundos 265.002499

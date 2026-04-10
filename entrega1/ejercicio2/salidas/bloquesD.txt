@@ -1,0 +1,4 @@
+Tiempo solución por bloques: 0.430510
+Tiempo solución por bloques: 3.526168
+Tiempo solución por bloques: 27.906079
+Tiempo solución por bloques: 220.728783
