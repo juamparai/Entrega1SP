@@ -3,7 +3,7 @@
 #SBATCH --exclusive
 #SBATCH --partition=Blade
 #SBATCH -o /dev/null
-#SBATCH -e salidas/bloques_errors.txt
+#SBATCH -e salidas/ejercicio2_errors.txt
 #SBATCH --time=00:15:00
 
-./bloques.o $1 > salidas/bloques_$1.txt
+./ejercicio2.o $1 > salidas/ejercicio2_$1.txt

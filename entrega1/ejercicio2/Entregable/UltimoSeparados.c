@@ -32,10 +32,20 @@ int main(int argc, char *argv[])
   r = (double *)malloc(n*n*sizeof(double));
   aux = (double *)malloc(n*n*sizeof(double));
   
-  // Inicializacion fuera de la medicion
+  // Inicializa la matriz a = matriz identidad
+	for(int i=0;i<n;i++)
+		for(int j=0;j<n;j++)
+            if (i == j)
+                a[i*n+j] = 1;
+            else
+    			a[i*n+j] = 0;
+
+	// Inicializa la matriz b por columnas de forma tal que la celda (i,j) tiene valor i
+	for(int j=0;j<n;j++)
+		for(int i=0;i<n;i++)
+			b[i+j*n] = i;
+
   for (int i=0; i<n*n; i++) {
-    a[i]=1.0;
-    b[i]=1.0;
     aux[i]=0.0;
     r[i]=0.0;
   }
@@ -45,29 +55,30 @@ int main(int argc, char *argv[])
   // Calculos
   double maxA = -1.0, minA = 1e10, sumA = 0;
   double maxB = -1.0, minB = 1e10, sumB = 0;
-  
-  for (int i=0; i<n; i++) {
-    for (int j=0; j<n; j++) {
-      int idx = i*n+j;
-
-      if (a[idx]>maxA) maxA = a[idx];
-      if (a[idx]<minA) minA = a[idx];
-      sumA += a[idx];
-
-      if (b[idx]>maxB) maxB = b[idx];
-      if (b[idx]<minB) minB = b[idx];
-      sumB += b[idx];
-
-      bt[j * n + i] = b[idx]; // Traspuesta de b
-    }
+  int i, j;
+  for (int k=0; k<n*n; k++) {
+    if (a[k]>maxA) maxA = a[k];
+    if (a[k]<minA) minA = a[k];
+    sumA += a[k];
   }
+
+  for (int k=0; k<n*n; k++) {
+    if (b[k]>maxB) maxB = b[k];
+    if (b[k]<minB) minB = b[k];
+    sumB += b[k];
+
+    i = k / n;
+    j = k % n;
+    bt[j*n + i] = b[k];
+  }
+
   double t = (maxA * maxB - minA * minB) / ((sumA/(n*n)) * (sumB/(n*n)));
 
   // aux = A * B
-  matmulblks(a, bt, aux, n); // Se usa bt (traspuesta de b) para aprovechar localidad espacial
+  matmulblks(a, b, aux, n);
 
   // res = aux * BT
-  matmulblks(aux, b, r, n); // Se usa b (traspuesta de bt) para aprovechar localidad espacial
+  matmulblks(aux, bt, r, n); 
 
   // Aplicar el escalar t al resultado
   for (int i=0; i<n*n; i++) {
@@ -76,11 +87,19 @@ int main(int argc, char *argv[])
 
   double workTime = dwalltime() - timetick;
   printf("Tiempo solución por bloques: %f\n", workTime);
-
+  printf("C= %f\n", t);
+  for (i=0; i<10; i++) {
+    for (j=0; j<10; j++) {
+      printf("%f ", r[i*n+j]);
+    }
+    printf("\n");
+  }
   // libera la memoria reservada
   free(a);
   free(b);
   free(r);
+  free(aux);
+  free(bt);
 
   return(0);
 }
