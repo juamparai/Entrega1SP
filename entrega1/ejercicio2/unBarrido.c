@@ -112,25 +112,13 @@ int main(int argc,char*argv[]){
     // Cálculo de C = (max_a * max_b - min_a * min_b) / prom_a * prom_b
     double C = (max_a * max_b - min_a * min_b) / (prom_a * prom_b);
         
+
     // Multiplicación de M por C
     for(i=0;i<n*n;i++)
         m[i] *= C;
 
     printf("Tiempo en segundos %f\n", dwalltime() - timetick);
     
-    // Imprimo matriz M
-    if (check == 1) {
-      printf("M:\n");
-      for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-          printf("%.2f ", m[i*n + j]);
-        }
-        printf("\n");
-      }
-    }
-
-    // Imprimo C
-    printf("C: %.12f\n", C);
 
 	free(a);
 	free(b);
