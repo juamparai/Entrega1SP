@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
   for (int j=0; j<n; j++) {
     for (int i=0; i<n; i++) {
       int idx = i + j*n; // Acceso por columnas
+      int idxT = j + i*n; // Transpuesta
 
       if (a[idx]>maxA) maxA = a[idx];
       if (a[idx]<minA) minA = a[idx];
@@ -70,10 +71,11 @@ int main(int argc, char *argv[])
       if (b[idx]<minB) minB = b[idx];
       sumB += b[idx];
 
-      bt[i*n + j] = b[i + j*n];
+      bt[idxT] = b[idx];
     }
   }
-  double c = (maxA * maxB - minA * minB) / ((sumA/(n*n)) * (sumB/(n*n)));
+  int n2 = n*n;
+  double c = (maxA * maxB - minA * minB) / ((sumA/n2) * (sumB/n2));
 
   // aux = A * B
   matmulblks(a, b, aux, n);
@@ -82,7 +84,7 @@ int main(int argc, char *argv[])
   matmulblks(aux, bt, r, n); 
 
   // Aplicar el escalar c al resultado
-  for (int i=0; i<n*n; i++) {
+  for (int i=0; i<n2; i++) {
     r[i] *= c;
   }
 
