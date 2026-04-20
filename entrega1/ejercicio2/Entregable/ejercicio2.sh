@@ -6,4 +6,4 @@
 #SBATCH -e salidas/ejercicio2_errors.txt
 #SBATCH --time=00:15:00
 
-./ejercicio2.o $1 $2 > salidas/ejercicio2_$1_$2.txt
+./ejercicio2.o $1> salidas/ejercicio2_$1.txt
